@@ -22,9 +22,21 @@ You will need a web browser and an Ethereum wallet browser extension such as [Me
 
 - if the wheel rolls a number between 1 and your number X you will win a prize
 
+## Limits
+
+[From the code](https://github.com/wheelspinio/wheelspin-io-contracts/blob/master/Gamble.sol#L8):
+
+```
+    uint public constant MIN_DEPOSIT = 0.1 ether;
+    uint public constant MAX_ROLL_UNDER = 96;
+    uint public constant MIN_ROLL_UNDER = 6;
+    uint public minBet = 0.05 ether;
+    uint public maxBet = 1 ether;
+```
+
 ## Disclaimer
 
-- Play at your own risk. Lost bets or technical issues might result in financial losss.
+- Play at your own risk. Lost bets or technical issues might result in financial loss.
 
 ## License
 

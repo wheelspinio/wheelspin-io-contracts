@@ -24,7 +24,7 @@ You will need a web browser and an Ethereum wallet browser extension such as [Me
 
 ## Limits
 
-[From the code](https://github.com/wheelspinio/wheelspin-io-contracts/blob/master/Gamble.sol#L8):
+[From the code](https://github.com/wheelspinio/wheelspin-io-contracts/blob/master/Gamble.sol#L12):
 
 ```
     uint public constant MIN_DEPOSIT = 0.1 ether;

@@ -6,7 +6,7 @@
 
 ## Etherscan link
 
-[Link to contract](https://etherscan.io/address/0x4f8a22ff45923df6147f63a8b01d0c16f2aa4172).
+[Link to contract](https://etherscan.io/address/0xBB936398C3C06f93a229f807a96236D0763889d4).
 
 ## Requirements
 

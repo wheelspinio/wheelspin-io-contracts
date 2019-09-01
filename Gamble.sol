@@ -1,17 +1,18 @@
 /* @author https://github.com/bertolo1988 */
 pragma solidity ^0.5.10;
 
-import './oraclizeAPI_0.5.sol';
+import './provableAPI_0.5.sol';
 import './Ownable.sol';
 import './SafeMath.sol';
 
-contract Gamble is Ownable, usingOraclize {
+contract Gamble is Ownable, usingProvable {
 
     using SafeMath for uint;
 
     uint public constant MIN_DEPOSIT = 0.1 ether;
     uint public constant MAX_ROLL_UNDER = 96;
     uint public constant MIN_ROLL_UNDER = 6;
+    
     uint constant MAX_INT_FROM_BYTE = 256;
     uint constant NUM_RANDOM_BYTES_REQUESTED = 7;
 
@@ -37,7 +38,7 @@ contract Gamble is Ownable, usingOraclize {
     event logBetSuccess(address indexed _from, uint _spin, uint _spinUnder, uint _stake, uint _prize, uint _payout, uint _newBalance);
 
     constructor() public {
-        oraclize_setProof(proofType_Ledger);
+        provable_setProof(proofType_Ledger);
     }
 
     // sets max bet value
@@ -117,9 +118,9 @@ contract Gamble is Ownable, usingOraclize {
     }
 
     function __callback( bytes32 _queryId, string memory _result, bytes memory _proof ) public {
-        require(msg.sender == oraclize_cbAddress());
+        require(msg.sender == provable_cbAddress());
         require(ongoingBets[_queryId].sender != address(0x0) , 'query does not exist');
-        if(oraclize_randomDS_proofVerify__returnCode( _queryId, _result, _proof) != 0){
+        if(provable_randomDS_proofVerify__returnCode( _queryId, _result, _proof) != 0){
             revert();
         } else {
             uint ceiling = (MAX_INT_FROM_BYTE ** NUM_RANDOM_BYTES_REQUESTED) - 1;
@@ -135,8 +136,7 @@ contract Gamble is Ownable, usingOraclize {
     }
 
     function bet(uint stake, uint spinUnder)external notOwner returns (uint spinUnderInput, uint stakeInput, uint prize, uint payout, uint previousBalance){
-        require(stake >= minBet , 'stake is too small');
-        require(maxBet >= stake, 'stake is too big');
+        require(stake >= minBet && maxBet >= stake , 'stake is outside allowed limits');
         require(spinUnder >= MIN_ROLL_UNDER && spinUnder <= MAX_ROLL_UNDER, 'spinUnder must be between or equal to 11 and 91');
         require(balances[msg.sender] >= stake, 'insufficient balance to cover stake');
         (payout, prize) = getPrizeAndPayout(stake, spinUnder);
@@ -145,7 +145,7 @@ contract Gamble is Ownable, usingOraclize {
         subtractAmountFromUser(stake);
         uint QUERY_EXECUTION_DELAY = 0;
         uint GAS_FOR_CALLBACK = 200000;
-        bytes32 queryId = oraclize_newRandomDSQuery(
+        bytes32 queryId = provable_newRandomDSQuery(
             QUERY_EXECUTION_DELAY,
             NUM_RANDOM_BYTES_REQUESTED,
             GAS_FOR_CALLBACK

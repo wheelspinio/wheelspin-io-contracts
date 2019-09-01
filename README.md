@@ -4,9 +4,11 @@
 
 [Wheelspin](https://wheelspin.io) is a luck game, similar to wheel of fortune, built in solidity and deployed in Ethereum [Mainnet](https://blockscout.com/eth/mainnet/).
 
-## Etherscan link
+## Contract Addresses
 
-[Link to contract](https://etherscan.io/address/0xBB936398C3C06f93a229f807a96236D0763889d4).
+- [mainnet](https://etherscan.io/address/0xf17b52226d78070696ff2dddcb08bb65986054e1): 0xf17b52226d78070696ff2dddcb08bb65986054e1
+
+- [ropsten](https://ropsten.etherscan.io/address/0x71ff026f519c8aabf9eddde75946701dd83de63c): 0x71ff026f519c8aabf9eddde75946701dd83de63c
 
 ## Requirements
 
